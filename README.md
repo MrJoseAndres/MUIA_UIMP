@@ -1,0 +1,1 @@
+En este repositorio se encuentra el código utilizado para el desarrollo del Máster en Investigación en Inteligencia Artificial de la Universidad de Menéndez Pelayo desarrollado por José Andrés Fernández Amor
