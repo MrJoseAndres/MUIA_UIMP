@@ -3,8 +3,7 @@ import numpy as np
 from skmultiflow.data import DataStream
 from skmultiflow.evaluation import EvaluateHoldout
 from skmultiflow.trees import HoeffdingTreeClassifier
-
-#todo MODIFICAR PARA QUE IMPLEMENTE CORRECTAMENTE LA TÉNCICA DE EVALUACIÓN HOLDOUT
+from skmultiflow.bayes import NaiveBayes
 
 # Loading data
 data = pd.read_csv('./data/adult.csv', delimiter=',')
@@ -35,6 +34,8 @@ ht_classifier = HoeffdingTreeClassifier(
     leaf_prediction='nb'
 )
 
+nb_classifier = NaiveBayes()
+
 # Evaluation creation
 evaluator = EvaluateHoldout(
     test_size=int(len(X) * 0.3),  # 30% for testing
@@ -48,22 +49,13 @@ evaluator = EvaluateHoldout(
 # Evaluation
 evaluator.evaluate(
     stream=stream,
-    model=ht_classifier,
-    model_names=['Hoeffding Tree']
+    model=[ht_classifier,nb_classifier],
+    model_names=['Hoeffding Tree', 'Naive Bayes']
 )
 
-# Paso 6: Imprimir resultados
-print("\nEvaluación Completada")
-print("----------------------------")
-try:
-    print(f"Precisión final del modelo: {evaluator.mean_eval_measurements[-1]['accuracy']:.4f}")
-    print(f"Kappa final del modelo: {evaluator.mean_eval_measurements[-1]['kappa']:.4f}")
-except (IndexError, TypeError):
-    print("No se pudieron obtener las métricas finales.")
+n_samples = len(X)
+test_size = int(n_samples * 0.3)
 
-print(f"Muestras totales procesadas: {evaluator.global_sample_count}")
-
-# Imprimir información adicional del conjunto de datos
 print("\nInformación del conjunto de datos:")
 print(f"Total de muestras: {n_samples}")
 print(f"Muestras de entrenamiento: {n_samples - test_size}")
