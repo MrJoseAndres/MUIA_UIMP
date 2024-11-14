@@ -39,7 +39,6 @@ nb_classifier = NaiveBayes()
 # Evaluation creation
 evaluator = EvaluateHoldout(
     test_size=int(len(X) * 0.3),  # 30% for testing
-    dynamic_test_set=False,
     max_samples=len(X),
     n_wait=250,
     show_plot=True,

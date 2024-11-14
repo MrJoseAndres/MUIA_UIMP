@@ -41,7 +41,7 @@ n_samples = len(X)
 pretraining_size = int(n_samples * 0.05)
 evaluator = EvaluatePrequential(
     max_samples=n_samples,
-    n_wait=pretraining_size,
+    pretrain_size=pretraining_size,
     show_plot=True,
     metrics=['accuracy', 'kappa']
 )
